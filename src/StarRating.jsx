@@ -1,53 +1,61 @@
 import React, { useState } from "react";
 import { AiFillStar } from "react-icons/ai";
-// import { AiOutlineStar, AiFillStar } from "react-icons/ai";
-import './App';
-import './styles.css';
-//<AiOutlineStar/>
-//<AiFillStar/>
-// Photon Interview Task
+
 const colors = {
-  orange: "#FFBA5A",
-  grey: "#a9a9a9"
-};
-
-
-export default function StarRating() {
-  const starCount = Array(5).fill(0);
-  const [ currentValue, setCurrentValue ] = useState(0);
-  const [ hoverValue, setHoverValue ] = useState(undefined);
-
-  const handleClick = (value) => {
-    setCurrentValue(value)
-  }
-
-  const handleMouseover = (newvalue) => {
-    setHoverValue(newvalue)
-  }
-
-  const handleMouseleave = () => {
-    setHoverValue(undefined)
-  }
-
-  return (
-    <div>
-      <h1>Star Ratings in React</h1>
-      {starCount.map((_, index) => {
-        return (
-          <AiFillStar 
-          key={index}
-          size={24} 
-          onClick = {() => handleClick(index + 1)}
-          onMouseOver = {() => handleMouseover(index + 1)}
-          onMouseLeave = {handleMouseleave}
-          // className = "mouseover"
-          color = { (currentValue || hoverValue) > index ? colors.orange : colors.grey }
-          style={{
-            cursor: "pointer"
-          }}
-          />
-        )
-      })}
-    </div>
-  );
+    orange: "#FFBA5A",
+    grey: "#a9a9a9"
 }
+const styles = {
+    textarea : {
+        margin: "12px",
+        minHeight: "100px"
+    }
+}
+
+function StarRating () {
+
+    const [ratingValue, setRatingValue] = useState(0);
+    const [hoverValue, setHoverValue] = useState(undefined);
+    const starCount = Array(5).fill(0);
+
+    const handleClick = (value) => {
+        setRatingValue(value)
+    }
+    
+    const handleMouseOver = (newValue) => {
+        setHoverValue(newValue)
+    }
+
+    const handleMouseLeave = () => {
+        setHoverValue(undefined)
+    }
+
+    return (
+        <div>
+            <div>
+                <h1>Give your Star ratings here</h1>
+                {starCount.map((_,index) => {
+                    const rating = index + 1;
+                    return (
+                        <AiFillStar
+                        key={index}
+                        value={rating}
+                        size = "25"
+                        style = {{cursor:"pointer"}}
+                        onClick = {()=> handleClick(index + 1)}
+                        onMouseOver = {()=> handleMouseOver(index + 1)}
+                        onMouseLeave = {handleMouseLeave}
+                        color = {(hoverValue || ratingValue) > index ? colors.orange : colors.grey}
+                        />
+                    )
+                })}
+            </div>
+            <textarea style={styles.textarea} placeholder="Type your comments..."></textarea>
+            <div>
+            <button type="submit">Submit</button>
+            </div>
+        </div>
+    )
+}
+
+export default StarRating;
